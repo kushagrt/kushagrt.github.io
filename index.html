@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Kushagr Tantia · Operations, Analytics & Strategy</title>
+<title>Kushagr T · Operations, Analytics & Strategy</title>
 <meta name="description" content="Operations and analytics leader. Scaled a 23→51 dark-store network, built internal data products adopted pan-India, owned P&Ls across quick commerce, food delivery and manufacturing.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -89,8 +89,18 @@
 
   footer{padding:40px 0 60px;color:var(--muted);font-size:15px;border-top:1px solid var(--line)}
 
-  @media (max-width:560px){
-    .arrow{width:36px;height:36px} .carousel{gap:6px} .case{padding:20px}
+  .case h3{font-size:1.1em}
+  .case h4{font-size:.72em}
+
+  /* Phones: card takes the full width, arrows move below it, text auto-fits (see script) */
+  @media (max-width:640px){
+    .carousel{display:block;padding-bottom:48px}
+    .arrow{position:absolute;bottom:0;width:36px;height:36px}
+    #prev{left:0} #next{right:0}
+    .dots{margin-top:-23px;height:9px}
+    .case{padding:16px;font-size:var(--fs,15px);line-height:1.45}
+    .case h4{margin:12px 0 3px}
+    .case li{margin-bottom:2px}
   }
   @media (prefers-reduced-motion:reduce){
     html{scroll-behavior:auto}
@@ -101,7 +111,7 @@
 <body>
 
 <nav><div class="wrap">
-  <span class="brand">Kushagr Tantia</span>
+  <span class="brand">Kushagr T</span>
   <a href="#work">Work</a><a href="#journey">My Journey</a><a href="#skills">Skills</a><a href="#beyond">Beyond work</a><a href="#contact">Contact</a>
 </div></nav>
 
@@ -304,13 +314,13 @@
 
 <section id="contact">
   <h2>Contact</h2>
-  <p>Open to BizOps, strategy and analytics roles in Bangalore, Delhi NCR, remote, the Middle East and Europe.</p>
+  <p>Open to BizOps, strategy and analytics roles across EMEA & APAC.</p>
   <p><a href="mailto:kushagrt@gmail.com">kushagrt@gmail.com</a> · <a href="https://linkedin.com/in/kushagrt" target="_blank" rel="noopener noreferrer">linkedin.com/in/kushagrt</a></p>
 </section>
 
 </main>
 
-<footer><div class="wrap">© Kushagr Tantia</div></footer>
+<footer><div class="wrap">© Kushagr T</div></footer>
 
 <script>
 (function(){
@@ -386,6 +396,23 @@
       inView = entries[0].isIntersecting; schedule();
     }, {threshold: 0.3}).observe(carousel);
   }
+
+  // On phones, shrink the card text (down to 12px) until the tallest card fits the screen.
+  function fit(){
+    carousel.style.removeProperty('--fs');
+    if (window.innerWidth > 640) return;
+    var avail = Math.max(window.innerHeight - 200, 300); // nav, heading, arrows, breathing room
+    var fs = 16;
+    carousel.style.setProperty('--fs', fs + 'px');
+    while (track.offsetHeight > avail && fs > 12){
+      fs -= 0.5;
+      carousel.style.setProperty('--fs', fs + 'px');
+    }
+  }
+  fit();
+  window.addEventListener('resize', fit);
+  window.addEventListener('orientationchange', fit);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
 
   go(0);
   schedule();
